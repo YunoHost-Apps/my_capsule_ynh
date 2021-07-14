@@ -24,19 +24,15 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Avertissements / informations importantes
 
-* Any known limitations, constrains or stuff not working, such as (but not limited to):
-	* requiring a full dedicated domain ?
-	* architectures not supported ?
-	* not-working single-sign on or LDAP integration ?
-	* the app requires an important amount of RAM / disk / .. to install or to work properly
-	* etc...
-
 * Other infos that people should be aware of, such as:
-	* any specific step to perform after installing (such as manually finishing the install, specific admin credentials, ...)
-	* how to configure / administrate the application if it ain't obvious
-	* upgrade process / specificities / things to be aware of ?
-	* security considerations ?
+	* Once installed, go to the chosen URL to know the user, domain and port you will have to use for the SFTP access.** The password is one you chosen during the installation. Under the Web directory, you will see a `www` folder which contains the public files served by this app. You can put all the files of your custom Web application inside.
+	* providing files access with [SFTP](https://yunohost.org/en/filezilla).
+	* It can also create a MySQL database which will be backed up and restored with your application. The connection details will be stored in the file `db_accesss.txt` located in the root directory.
 
+* SFTP port
+You may have change the SSH port as described in this section: 
+[Modify the SSH port](https://yunohost.org/en/security#modify-the-ssh-port); 
+then you should use this port to update your website with SFTP.
 ## Documentations et ressources
 
 * Dépôt de code officiel de l'app : https://tildegit.org/Sbgodin/htmgem
