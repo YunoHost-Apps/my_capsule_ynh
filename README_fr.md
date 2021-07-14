@@ -17,6 +17,11 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 **Démo :** https://gmi.sbgodin.fr/htmgem/
 
+## Captures d'écran
+
+![](./doc/screenshots/screenshot2.png)
+![](./doc/screenshots/screenshot1.png)
+
 ## Avertissements / informations importantes
 
 * Any known limitations, constrains or stuff not working, such as (but not limited to):
