@@ -1,5 +1,5 @@
-SOURCE_URL=url of app's source
-SOURCE_SUM=sha256 checksum
+SOURCE_URL=https://tildegit.org/sbgodin/HtmGem/archive/v1.4.0.tar.gz
+SOURCE_SUM=3a8f55f17a0b001d73d4168e4838df26c0d95ee3bcfb517c1f502dae1b617987
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true

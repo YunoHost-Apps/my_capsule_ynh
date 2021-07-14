@@ -1,0 +1,6 @@
+# Custom Gemini capsule
+# It works!
+Congratulation, you have just installed your Custom Gemini capsule.
+
+## Edit this site
+To edit this site, put your files in __FINALPATH__/www using SSH/SCP.

@@ -1,0 +1,10 @@
+[[server]]
+hostname = "__DOMAIN__"
+dir = "__FINALPATH__/www/"
+key = "/etc/yunohost/certs/__DOMAIN__/key.pem"
+cert = "/etc/yunohost/certs/__DOMAIN__/crt.pem"
+# index is optional but defaults to index.gemini. The server will serve files
+# ending in gemini or gmi.
+index = "index.gmi"
+# lang is optional
+lang = "__LANGUAGE__"
