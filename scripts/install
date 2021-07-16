@@ -159,6 +159,11 @@ name: ${db_name}\nuser: ${db_name}\npass: ${db_pwd}" > ../sources/db_access.txt
 	cp -r "../sources/db_access.txt" "$final_path/db_access.txt"
 fi
 
+#=================================================
+# APPLY RIGHTS
+#=================================================
+ynh_script_progression --message="Apply rights..."
+
 chown -R $app:www-data "$final_path"
 
 # Home directory of the user needs to be owned by root to allow
@@ -175,8 +180,6 @@ chmod o-rwx "$final_path"
 ynh_script_progression --message="Adding a configuration file..."
 
 ynh_add_config --template="../conf/server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
-
-chown gemserv:gemserv "/etc/gemserv/config.d/$domain.toml"
 
 ynh_systemd_action --service_name=gemserv --action=reload
 

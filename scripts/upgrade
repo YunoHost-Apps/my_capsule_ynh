@@ -90,16 +90,6 @@ then
 	ynh_setup_source --dest_dir="$final_path/www/htmgem"
 fi
 
-chown -R $app:www-data "$final_path"
-
-# Home directory of the user needs to be owned by root to allow
-# SFTP connections
-chown root:root "$final_path"
-setfacl -m g:$app:r-x "$final_path"
-setfacl -m g:www-data:r-x "$final_path"
-setfacl -m g:gemserv:r-x "$final_path"
-chmod o-rwx "$final_path"
-
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -126,8 +116,19 @@ ynh_add_fpm_config
 #=================================================
 # SPECIFIC UPGRADE
 #=================================================
-# ...
+# APPLY RIGHTS
 #=================================================
+ynh_script_progression --message="Apply rights..."
+
+chown -R $app:www-data "$final_path"
+
+# Home directory of the user needs to be owned by root to allow
+# SFTP connections
+chown root:root "$final_path"
+setfacl -m g:$app:r-x "$final_path"
+setfacl -m g:www-data:r-x "$final_path"
+setfacl -m g:gemserv:r-x "$final_path"
+chmod o-rwx "$final_path"
 
 #=================================================
 # UPDATE A CONFIG FILE
@@ -135,8 +136,6 @@ ynh_add_fpm_config
 ynh_script_progression --message="Updating a configuration file..."
 
 ynh_add_config --template="../conf/server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
-
-chown gemserv:gemserv "/etc/gemserv/config.d/$domain.toml"
 
 ynh_systemd_action --service_name=gemserv --action=reload
 
