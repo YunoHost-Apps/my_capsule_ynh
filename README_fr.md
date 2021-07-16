@@ -13,7 +13,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 
 
-**Version incluse :** 1.4.0~ynh1
+**Version incluse :** 1.4.0~ynh2
 
 **Démo :** https://gmi.sbgodin.fr/htmgem/
 
