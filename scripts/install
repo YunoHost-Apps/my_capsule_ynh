@@ -7,12 +7,16 @@
 #=================================================
 
 source _common.sh
+source ynh_apps
 source /usr/share/yunohost/helpers
 
 #=================================================
 # MANAGE SCRIPT FAILURE
 #=================================================
 
+ynh_clean_setup () {
+	ynh_clean_check_starting
+}
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
@@ -22,9 +26,9 @@ ynh_abort_if_errors
 
 domain=$YNH_APP_ARG_DOMAIN
 path_url="/"
-admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
 language=$YNH_APP_ARG_LANGUAGE
+admin=$YNH_APP_ARG_ADMIN
 password=$YNH_APP_ARG_PASSWORD
 with_sftp=$YNH_APP_ARG_WITH_SFTP
 with_mysql=$YNH_APP_ARG_WITH_MYSQL
@@ -49,8 +53,8 @@ ynh_script_progression --message="Storing installation settings..."
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=language --value=$language
+ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=with_sftp --value=$with_sftp
 ynh_app_setting_set --app=$app --key=with_mysql --value=$with_mysql
 
@@ -61,13 +65,8 @@ ynh_app_setting_set --app=$app --key=with_mysql --value=$with_mysql
 #=================================================
 ynh_script_progression --message="Installing dependencies..."
 
-if ! ynh_package_is_installed --package="gemserv-ynh-deps"
-then
-	yunohost tools update
-	yunohost app install gemserv --force
-fi
-
 ynh_install_app_dependencies $pkg_dependencies
+ynh_install_apps --apps="$app_dependencies"
 
 #=================================================
 # CREATE DEDICATED USER
@@ -118,20 +117,20 @@ ynh_setup_source --dest_dir="$final_path/www/htmgem"
 chown -R $app:www-data "$final_path"
 
 #=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Configuring NGINX web server..."
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
-
-#=================================================
 # PHP-FPM CONFIGURATION
 #=================================================
 ynh_script_progression --message="Configuring PHP-FPM..."
 
 # Create a dedicated PHP-FPM config
 ynh_add_fpm_config
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Configuring NGINX web server..."
+
+# Create a dedicated NGINX config
+ynh_add_nginx_config
 
 #=================================================
 # SPECIFIC SETUP
@@ -142,9 +141,9 @@ ynh_script_progression --message="Building default capsule..."
 
 if [ $with_sftp -eq 1 ]
 then
-	ynh_add_config --template="../sources/www/index.gmi" --destination="$final_path/www/index.gmi"
+	ynh_add_config --template="../conf/index.gmi" --destination="$final_path/www/index.gmi"
 else
-	ynh_add_config --template="../sources/www/index_no_sftp.gmi" --destination="$final_path/www/index.gmi"
+	ynh_add_config --template="../conf/index_no_sftp.gmi" --destination="$final_path/www/index.gmi"
 fi
 
 chmod 644 "$final_path/www/index.gmi"
@@ -166,9 +165,9 @@ ynh_script_progression --message="Apply rights..."
 
 chown -R $app:www-data "$final_path"
 
-# Home directory of the user needs to be owned by root to allow
+# Home directory of the user needs to be owned by $app to allow
 # SFTP connections
-chown root:root "$final_path"
+chown $app:$app "$final_path"
 setfacl -m g:$app:r-x "$final_path"
 setfacl -m g:www-data:r-x "$final_path"
 setfacl -m g:gemserv:r-x "$final_path"
@@ -180,7 +179,6 @@ chmod o-rwx "$final_path"
 ynh_script_progression --message="Adding a configuration file..."
 
 ynh_add_config --template="../conf/server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
-
 ynh_systemd_action --service_name=gemserv --action=reload
 
 #=================================================
@@ -193,6 +191,8 @@ ynh_script_progression --message="Configuring permissions..."
 # Make app public if necessary
 if [ $is_public -eq 1 ]
 then
+	# Everyone can access the app.
+	# The "main" permission is automatically created before the install script.
 	ynh_permission_update --permission="main" --add="visitors"
 fi
 
