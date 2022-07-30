@@ -53,8 +53,7 @@
             {
                 "name": "password",
                 "type": "password",
-                "optional": true,
-                "example": "Choose a password"
+                "optional": true
             },
             {
                 "name": "with_sftp",
