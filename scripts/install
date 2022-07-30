@@ -152,10 +152,10 @@ chown $app:$app "$final_path/www/index.gmi"
 if [ $with_mysql -eq 1 ]; then
 	# Store the database access
 	echo -e "# MySQL Database
-name: ${db_name}\nuser: ${db_name}\npass: ${db_pwd}" > ../sources/db_access.txt
+name: ${db_name}\nuser: ${db_name}\npass: ${db_pwd}" > ../conf/db_access.txt
 
 	# Copy files to the right place
-	cp -r "../sources/db_access.txt" "$final_path/db_access.txt"
+	cp -r "../conf/db_access.txt" "$final_path/db_access.txt"
 fi
 
 #=================================================
