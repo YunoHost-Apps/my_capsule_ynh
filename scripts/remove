@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_apps
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -17,11 +18,11 @@ ynh_script_progression --message="Loading installation settings..."
 app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
-with_mysql=$(ynh_app_setting_get --app=$app --key=with_mysql)
-with_sftp=$(ynh_app_setting_get --app=$app --key=with_sftp)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+with_mysql=$(ynh_app_setting_get --app=$app --key=with_mysql)
+with_sftp=$(ynh_app_setting_get --app=$app --key=with_sftp)
 
 #=================================================
 # STANDARD REMOVE
@@ -35,14 +36,6 @@ if [ $with_mysql -eq 1 ]; then
 	# Remove a database if it exists, along with the associated user
 	ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 fi
-
-#=================================================
-# REMOVE DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Removing dependencies..."
-
-# Remove metapackage and its dependencies
-ynh_remove_app_dependencies
 
 #=================================================
 # REMOVE APP MAIN DIR
@@ -69,8 +62,6 @@ ynh_script_progression --message="Removing PHP-FPM configuration..."
 ynh_remove_fpm_config
 
 #=================================================
-# SPECIFIC REMOVE
-#=================================================
 # REMOVE VARIOUS FILES
 #=================================================
 ynh_script_progression --message="Removing various files..."
@@ -79,6 +70,17 @@ ynh_script_progression --message="Removing various files..."
 ynh_secure_remove --file="/etc/gemserv/config.d/$domain.toml"
 ynh_systemd_action --service_name=gemserv --action=reload
 
+#=================================================
+# REMOVE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Removing dependencies..."
+
+# Remove metapackage and its dependencies
+ynh_remove_app_dependencies
+ynh_remove_apps
+
+#=================================================
+# SPECIFIC REMOVE
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
