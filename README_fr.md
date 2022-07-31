@@ -29,14 +29,15 @@ Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages G
 
 ## Avertissements / informations importantes
 
-* Once installed, go to the chosen URL to know the user, domain and port you will have to use for the SFTP access.** The password is one you chosen during the installation. Under the Web directory, you will see a `www` folder which contains the public files served by this app. You can put all the files of your custom Web application inside.
-* providing files access with [SFTP](https://yunohost.org/en/filezilla).
-* It can also create a MySQL database which will be backed up and restored with your application. The connection details will be stored in the file `db_accesss.txt` located in the root directory.
+* Une fois installé, allez à l'URL choisie pour connaître l'utilisateur, le domaine et le port que vous devrez utiliser pour l'accès SFTP ** Le mot de passe est celui que vous avez choisi lors de l'installation. Sous le répertoire Web, vous verrez un dossier `www` qui contient les fichiers publics servis par cette application. Vous pouvez y mettre tous les fichiers de votre application Web personnalisée.
+* L'application peut aussi créer une base de données MySQL, permettant l'accès aux fichiers par [SFTP] (https://yunohost.org/en/filezilla).
+* Il peut également créer une base de données MySQL qui sera sauvegardée et restaurée avec votre application. Les détails de connexion seront stockés dans le fichier `db_accesss.txt` situé dans le répertoire racine.
 
-* SFTP port
-You may have change the SSH port as described in this section: 
-[Modify the SSH port](https://yunohost.org/en/security#modify-the-ssh-port); 
-then you should use this port to update your website with SFTP.
+* Port SFTP
+Vous pouvez modifier le port SSH comme décrit dans cette section :
+[Modifier le port SSH](https://yunohost.org/en/security#modify-the-ssh-port) ;
+alors vous devez utiliser ce port pour mettre à jour votre site web avec SFTP.
+
 ## Documentations et ressources
 
 * Dépôt de code officiel de l'app : <https://tildegit.org/Sbgodin/htmgem>
