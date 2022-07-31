@@ -15,7 +15,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Vue d'ensemble
 
-Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reachable on the web.
+Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages Gemini accessibles sur le web.
 
 
 **Version incluse :** 1.4.0~ynh3
