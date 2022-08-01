@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_apps
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -18,10 +19,11 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
+language=$(ynh_app_setting_get --app=$app --key=language)
 admin=$(ynh_app_setting_get --app=$app --key=admin)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$db_name
 password=$(ynh_app_setting_get --app=$app --key=password)
 with_mysql=$(ynh_app_setting_get --app=$app --key=with_mysql)
 with_sftp=$(ynh_app_setting_get --app=$app --key=with_sftp)
@@ -41,6 +43,7 @@ ynh_script_progression --message="Backing up the app before upgrading (may take 
 # Backup the current version of the app
 ynh_backup_before_upgrade
 ynh_clean_setup () {
+	ynh_clean_check_starting
 	# Restore it if the upgrade fails
 	ynh_restore_upgradebackup
 }
@@ -90,13 +93,9 @@ then
 	ynh_setup_source --dest_dir="$final_path/www/htmgem"
 fi
 
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..."
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
+#chmod 750 "$final_path"
+#chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 
 #=================================================
 # UPGRADE DEPENDENCIES
@@ -114,6 +113,14 @@ ynh_script_progression --message="Upgrading PHP-FPM configuration..."
 ynh_add_fpm_config
 
 #=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Upgrading NGINX web server configuration..."
+
+# Create a dedicated NGINX config
+ynh_add_nginx_config
+
+#=================================================
 # SPECIFIC UPGRADE
 #=================================================
 # APPLY RIGHTS
@@ -122,9 +129,9 @@ ynh_script_progression --message="Apply rights..."
 
 chown -R $app:www-data "$final_path"
 
-# Home directory of the user needs to be owned by root to allow
+# Home directory of the user needs to be owned by $app to allow
 # SFTP connections
-chown root:root "$final_path"
+chown $app:$app "$final_path"
 setfacl -m g:$app:r-x "$final_path"
 setfacl -m g:www-data:r-x "$final_path"
 setfacl -m g:gemserv:r-x "$final_path"
@@ -136,7 +143,6 @@ chmod o-rwx "$final_path"
 ynh_script_progression --message="Updating a configuration file..."
 
 ynh_add_config --template="../conf/server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
-
 ynh_systemd_action --service_name=gemserv --action=reload
 
 #=================================================
