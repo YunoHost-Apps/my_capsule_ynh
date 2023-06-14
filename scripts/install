@@ -14,47 +14,47 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
-ynh_clean_setup () {
+#REMOVEME? ynh_clean_setup () {
 	ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-domain=$YNH_APP_ARG_DOMAIN
-path_url="/"
-is_public=$YNH_APP_ARG_IS_PUBLIC
-language=$YNH_APP_ARG_LANGUAGE
-admin=$YNH_APP_ARG_ADMIN
-password=$YNH_APP_ARG_PASSWORD
-with_sftp=$YNH_APP_ARG_WITH_SFTP
-with_mysql=$YNH_APP_ARG_WITH_MYSQL
+#REMOVEME? domain=$YNH_APP_ARG_DOMAIN
+path="/"
+#REMOVEME? is_public=$YNH_APP_ARG_IS_PUBLIC
+#REMOVEME? language=$YNH_APP_ARG_LANGUAGE
+#REMOVEME? admin=$YNH_APP_ARG_ADMIN
+#REMOVEME? password=$YNH_APP_ARG_PASSWORD
+#REMOVEME? with_sftp=$YNH_APP_ARG_WITH_SFTP
+#REMOVEME? with_mysql=$YNH_APP_ARG_WITH_MYSQL
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..."
+#REMOVEME? ynh_script_progression --message="Validating installation parameters..."
 
-final_path=/var/www/$app
-test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
+#REMOVEME? install_dir=/var/www/$app
+#REMOVEME? test ! -e "$install_dir" || ynh_die --message="This path already contains a folder"
 
 # Register (book) web path
-ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
+#REMOVEME? ynh_webpath_register --app=$app --domain=$domain --path=$path
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..."
+#REMOVEME? ynh_script_progression --message="Storing installation settings..."
 
-ynh_app_setting_set --app=$app --key=domain --value=$domain
-ynh_app_setting_set --app=$app --key=path --value=$path_url
+#REMOVEME? ynh_app_setting_set --app=$app --key=domain --value=$domain
+#REMOVEME? ynh_app_setting_set --app=$app --key=path --value=$path
 ynh_app_setting_set --app=$app --key=language --value=$language
-ynh_app_setting_set --app=$app --key=admin --value=$admin
+#REMOVEME? ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=with_sftp --value=$with_sftp
 ynh_app_setting_set --app=$app --key=with_mysql --value=$with_mysql
 
@@ -63,15 +63,15 @@ ynh_app_setting_set --app=$app --key=with_mysql --value=$with_mysql
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..."
+#REMOVEME? ynh_script_progression --message="Installing dependencies..."
 
-ynh_install_app_dependencies $pkg_dependencies
+#REMOVEME? ynh_install_app_dependencies $pkg_dependencies
 ynh_install_apps --apps="$app_dependencies"
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..."
+#REMOVEME? ynh_script_progression --message="Configuring system user..."
 
 if [ $with_sftp -eq 1 ]
 then
@@ -80,13 +80,13 @@ else
 	groups=""
 fi
 
-ynh_system_user_create --username=$app --home_dir="$final_path" --groups="$groups"
+#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir" --groups="$groups"
 
 if [ $with_sftp -eq 1 ]
 then
 	# Add the password to this user
 	chpasswd <<< "${app}:${password}"
-	ynh_app_setting_set --app=$app --key=password --value="$password"
+#REMOVEME? 	ynh_app_setting_set --app=$app --key=password --value="$password"
 fi
 
 #=================================================
@@ -95,12 +95,12 @@ fi
 
 if [ $with_mysql -eq 1 ]
 then
-	ynh_script_progression --message="Creating a MySQL database..."
+#REMOVEME? 	ynh_script_progression --message="Creating a MySQL database..."
 
 	db_name=$(ynh_sanitize_dbid --db_name=$app)
 	db_user=$db_name
-	ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-	ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
+#REMOVEME? 	ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+#REMOVEME? 	ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 fi
 
 #=================================================
@@ -108,13 +108,13 @@ fi
 #=================================================
 ynh_script_progression --message="Setting up source files..."
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+#REMOVEME? ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path/www/htmgem"
+ynh_setup_source --dest_dir="$install_dir/www/htmgem"
 
-#chmod 750 "$final_path"
-#chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+#chmod 750 "$install_dir"
+#chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
 
 #=================================================
 # PHP-FPM CONFIGURATION
@@ -141,13 +141,13 @@ ynh_script_progression --message="Building default capsule..."
 
 if [ $with_sftp -eq 1 ]
 then
-	ynh_add_config --template="../conf/index.gmi" --destination="$final_path/www/index.gmi"
+	ynh_add_config --template="../conf/index.gmi" --destination="$install_dir/www/index.gmi"
 else
-	ynh_add_config --template="../conf/index_no_sftp.gmi" --destination="$final_path/www/index.gmi"
+	ynh_add_config --template="../conf/index_no_sftp.gmi" --destination="$install_dir/www/index.gmi"
 fi
 
-chmod 644 "$final_path/www/index.gmi"
-chown $app:$app "$final_path/www/index.gmi"
+chmod 644 "$install_dir/www/index.gmi"
+chown $app:$app "$install_dir/www/index.gmi"
 
 if [ $with_mysql -eq 1 ]; then
 	# Store the database access
@@ -155,7 +155,7 @@ if [ $with_mysql -eq 1 ]; then
 name: ${db_name}\nuser: ${db_name}\npass: ${db_pwd}" > ../conf/db_access.txt
 
 	# Copy files to the right place
-	cp -r "../conf/db_access.txt" "$final_path/db_access.txt"
+	cp -r "../conf/db_access.txt" "$install_dir/db_access.txt"
 fi
 
 #=================================================
@@ -163,15 +163,15 @@ fi
 #=================================================
 ynh_script_progression --message="Apply rights..."
 
-chown -R $app:www-data "$final_path"
+chown -R $app:www-data "$install_dir"
 
 # Home directory of the user needs to be owned by $app to allow
 # SFTP connections
-chown $app:$app "$final_path"
-setfacl -m g:$app:r-x "$final_path"
-setfacl -m g:www-data:r-x "$final_path"
-setfacl -m g:gemserv:r-x "$final_path"
-chmod o-rwx "$final_path"
+chown $app:$app "$install_dir"
+setfacl -m g:$app:r-x "$install_dir"
+setfacl -m g:www-data:r-x "$install_dir"
+setfacl -m g:gemserv:r-x "$install_dir"
+chmod o-rwx "$install_dir"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -186,22 +186,22 @@ ynh_systemd_action --service_name=gemserv --action=reload
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring permissions..."
+#REMOVEME? ynh_script_progression --message="Configuring permissions..."
 
 # Make app public if necessary
-if [ $is_public -eq 1 ]
+#REMOVEME? if [ $is_public -eq 1 ]
 then
 	# Everyone can access the app.
 	# The "main" permission is automatically created before the install script.
-	ynh_permission_update --permission="main" --add="visitors"
+#REMOVEME? 	ynh_permission_update --permission="main" --add="visitors"
 fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..."
+#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..."
 
-ynh_systemd_action --service_name=nginx --action=reload
+#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
