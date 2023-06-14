@@ -4,10 +4,6 @@
 # COMMON VARIABLES
 #=================================================
 
-# dependencies used by the app
-#REMOVEME? pkg_dependencies=""
-#REMOVEME? app_dependencies="gemserv"
-
 #=================================================
 # PERSONAL HELPERS
 #=================================================
