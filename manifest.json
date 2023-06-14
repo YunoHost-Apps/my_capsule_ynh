@@ -3,9 +3,10 @@
     "id": "my_capsule",
     "packaging_format": 1,
     "description": {
-        "en": "Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reachable on the web."
+        "en": "Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reachable on the web.",
+        "fr": "Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages Gemini accessibles sur le web."
     },
-    "version": "1.4.1~ynh0",
+    "version": "1.4.1~ynh1",
     "url": "https://tildegit.org/Sbgodin/htmgem",
     "upstream": {
         "license": "AGPL-3.0-or-later",
