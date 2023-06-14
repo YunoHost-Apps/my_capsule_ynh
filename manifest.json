@@ -5,7 +5,7 @@
     "description": {
         "en": "Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reachable on the web."
     },
-    "version": "1.4.0~ynh3",
+    "version": "1.4.1~ynh0",
     "url": "https://tildegit.org/Sbgodin/htmgem",
     "upstream": {
         "license": "AGPL-3.0-or-later",
@@ -17,7 +17,7 @@
         "name": "yalh76"
     },
     "requirements": {
-        "yunohost": ">= 4.3.0"
+        "yunohost": ">= 11.1.20"
     },
     "multi_instance": true,
     "services": [
