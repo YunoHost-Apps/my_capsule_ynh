@@ -40,6 +40,7 @@ You may have change the SSH port as described in this section:
 then you should use this port to update your website with SFTP.
 ## Documentation and resources
 
+* Official app website: <https://tildegit.org/Sbgodin/htmgem>
 * Upstream app code repository: <https://tildegit.org/Sbgodin/htmgem>
 * YunoHost documentation for this app: <https://yunohost.org/app_my_capsule>
 * Report a bug: <https://github.com/YunoHost-Apps/my_capsule_ynh/issues>
