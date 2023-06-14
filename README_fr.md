@@ -5,15 +5,16 @@ It shall NOT be edited by hand.
 
 # my_capsule pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/my_capsule.svg)](https://dash.yunohost.org/appci/app/my_capsule) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/my_capsule.svg)](https://dash.yunohost.org/appci/app/my_capsule) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
+
 [![Installer my_capsule avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=my_capsule)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer my_capsule rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer my_capsule rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages Gemini accessibles sur le web.
 
@@ -22,10 +23,10 @@ Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages G
 
 **Démo :** https://gmi.sbgodin.fr/htmgem/
 
-## Captures d'écran
+## Captures d’écran
 
-![Capture d'écran de my_capsule](./doc/screenshots/screenshot2.png)
-![Capture d'écran de my_capsule](./doc/screenshots/screenshot1.png)
+![Capture d’écran de my_capsule](./doc/screenshots/screenshot2.png)
+![Capture d’écran de my_capsule](./doc/screenshots/screenshot1.png)
 
 ## Avertissements / informations importantes
 
@@ -40,7 +41,7 @@ alors vous devez utiliser ce port pour mettre à jour votre site web avec SFTP.
 
 ## Documentations et ressources
 
-* Dépôt de code officiel de l'app : <https://tildegit.org/Sbgodin/htmgem>
+* Dépôt de code officiel de l’app : <https://tildegit.org/Sbgodin/htmgem>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_my_capsule>
 * Signaler un bug : <https://github.com/YunoHost-Apps/my_capsule_ynh/issues>
 
@@ -56,4 +57,4 @@ ou
 sudo yunohost app upgrade my_capsule -u https://github.com/YunoHost-Apps/my_capsule_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
