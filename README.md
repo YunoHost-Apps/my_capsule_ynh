@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # my_capsule for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/my_capsule.svg)](https://dash.yunohost.org/appci/app/my_capsule) ![Working status](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/my_capsule.svg)](https://dash.yunohost.org/appci/app/my_capsule) ![Working status](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
+
 [![Install my_capsule with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=my_capsule)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -18,7 +19,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reachable on the web.
 
 
-**Shipped version:** 1.4.0~ynh3
+**Shipped version:** 1.4.1~ynh1
 
 **Demo:** https://gmi.sbgodin.fr/htmgem/
 
