@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="php$YNH_DEFAULT_PHP_VERSION-fpm php$YNH_DEFAULT_PHP_VERSION-mbstring"
+pkg_dependencies="php7.4-fpm php7.4-mbstring"
 app_dependencies="gemserv"
 
 #=================================================
