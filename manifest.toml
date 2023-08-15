@@ -54,11 +54,11 @@ ram.runtime = "50M"
     type = "boolean"
     default = true
 
-    [install.with_mysql]
-    ask.en = "Do you need a MySQL database?"
-    ask.fr = "Avez-vous besoin d'une base de données MySQL ?"
-    type = "boolean"
-    default = false
+    #[install.with_mysql]
+    #ask.en = "Do you need a MySQL database?"
+    #ask.fr = "Avez-vous besoin d'une base de données MySQL ?"
+    #type = "boolean"
+    #default = false
 
 [resources]
         [resources.sources.main]
@@ -73,7 +73,11 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "gemserv"
-
+    packages = "gemserv php8.2-fpm php8.2-mbstring"
+    #packages_from_raw_bash = """
+    #    if [[ "$database" == true ]]; then 
+    #        echo "mariadb-server"
+    #    fi
+    #"""
     #[resources.database]
     #type = "mysql"
