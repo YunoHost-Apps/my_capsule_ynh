@@ -16,7 +16,7 @@ code = "https://tildegit.org/Sbgodin/htmgem"
 website = "https://tildegit.org/Sbgodin/htmgem"
 
 [integration]
-yunohost = ">= 11.1.20"
+yunohost = ">= 11.2"
 architectures = "all"
 multi_instance = true
 ldap = false
