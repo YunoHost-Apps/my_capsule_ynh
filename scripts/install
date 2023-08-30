@@ -40,8 +40,13 @@ then
 	ynh_script_progression --message="Creating a MySQL database..."
 
 	db_name=$(ynh_sanitize_dbid --db_name=$app)
-	db_user=$db_name
-	ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+    db_user=$db_name
+    db_pwd=$(ynh_string_random --length=30)
+
+    ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+    ynh_app_setting_set --app=$app --key=db_user --value=$db_user
+    ynh_app_setting_set --app=$app --key=db_pwd --value=$db_pwd
+
 	ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 fi
 
@@ -61,7 +66,7 @@ chown -R $app:www-data "$install_dir"
 ynh_script_progression --message="Configuring PHP-FPM..."
 
 # Create a dedicated PHP-FPM config
-ynh_add_fpm_config
+ynh_add_fpm_config --usage=low --footprint=low
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
@@ -86,7 +91,7 @@ chown $app:$app "$install_dir/www/index.gmi"
 if [ $with_mysql -eq 1 ]; then
 	# Store the database access
 	echo -e "# MySQL Database
-name: ${db_name}\nuser: ${db_name}\npass: ${db_pwd}" > ../conf/db_access.txt
+	name: ${db_name}\nuser: ${db_name}\npass: ${db_pwd}" > ../conf/db_access.txt
 
 	# Copy files to the right place
 	cp -r "../conf/db_access.txt" "$install_dir/db_access.txt"
