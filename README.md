@@ -19,7 +19,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reachable on the web.
 
 
-**Shipped version:** 1.4.1~ynh2
+**Shipped version:** 1.4.1~ynh1
 
 **Demo:** https://gmi.sbgodin.fr/htmgem/
 
