@@ -75,9 +75,6 @@ ram.runtime = "50M"
     packages = "gemserv, php8.2-fpm, php8.2-mbstring"
     packages_from_raw_bash = """
         if [[ "$database" == true ]]; then 
-            echo "mariadb-server"
+            echo "mariadb-server, php8.2-mysql"
         fi
     """
-
-    #[resources.database]
-    #type = "mysql"
