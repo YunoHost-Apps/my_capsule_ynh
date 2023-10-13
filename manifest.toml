@@ -2,8 +2,8 @@ packaging_format = 2
 
 id = "my_capsule"
 name = "my_capsule"
-description.en = "Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reachable on the web."
-description.fr = "Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages Gemini accessibles sur le web."
+description.en = "Custom Gemini capsule with SFTP access and HtmGem"
+description.fr = "Capsule Gemini personnalisée avec accès SFTP et HtmGem"
 
 version = "1.4.1~ynh1"
 
@@ -72,7 +72,7 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "gemserv php8.2-fpm php8.2-mbstring"
+    packages = "gemserv, php8.2-fpm, php8.2-mbstring"
     packages_from_raw_bash = """
         if [[ "$database" == true ]]; then 
             echo "mariadb-server"
