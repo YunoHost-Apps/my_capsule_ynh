@@ -42,7 +42,7 @@ alors vous devez utiliser ce port pour mettre à jour votre site web avec SFTP.
 ## Documentations et ressources
 
 * Dépôt de code officiel de l’app : <https://tildegit.org/Sbgodin/htmgem>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_my_capsule>
+* YunoHost Store: <https://apps.yunohost.org/app/my_capsule>
 * Signaler un bug : <https://github.com/YunoHost-Apps/my_capsule_ynh/issues>
 
 ## Informations pour les développeurs

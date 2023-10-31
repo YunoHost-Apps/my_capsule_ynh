@@ -41,7 +41,7 @@ then you should use this port to update your website with SFTP.
 ## Documentation and resources
 
 * Upstream app code repository: <https://tildegit.org/Sbgodin/htmgem>
-* YunoHost documentation for this app: <https://yunohost.org/app_my_capsule>
+* YunoHost Store: <https://apps.yunohost.org/app/my_capsule>
 * Report a bug: <https://github.com/YunoHost-Apps/my_capsule_ynh/issues>
 
 ## Developer info
