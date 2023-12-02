@@ -62,7 +62,7 @@ ram.runtime = "50M"
 [resources]
         [resources.sources.main]
         url = "https://tildegit.org/sbgodin/HtmGem/archive/v1.4.1.tar.gz"
-        sha256 = "c7a1d21f6791f567222a1bfb26d72fd44c6083cddb8536011477cf001eb90d27"
+        sha256 = "4d21fbdf5f89e510052185ea9d331614338353886baaecc05d007fa1481f75ce"
 
     [resources.system_user]
 
