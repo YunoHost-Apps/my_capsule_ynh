@@ -32,6 +32,7 @@ Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reac
 
 * Official app website: <https://tildegit.org/Sbgodin/htmgem>
 * Upstream app code repository: <https://tildegit.org/Sbgodin/htmgem>
+* YunoHost Store: <https://apps.yunohost.org/app/my_capsule>
 * Report a bug: <https://github.com/YunoHost-Apps/my_capsule_ynh/issues>
 
 ## Developer info

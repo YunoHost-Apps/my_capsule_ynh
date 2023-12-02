@@ -32,6 +32,7 @@ Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages G
 
 * Site officiel de l’app : <https://tildegit.org/Sbgodin/htmgem>
 * Dépôt de code officiel de l’app : <https://tildegit.org/Sbgodin/htmgem>
+* YunoHost Store: <https://apps.yunohost.org/app/my_capsule>
 * Signaler un bug : <https://github.com/YunoHost-Apps/my_capsule_ynh/issues>
 
 ## Informations pour les développeurs
