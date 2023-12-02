@@ -72,7 +72,7 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "gemserv, php8.2-fpm, php8.2-mbstring"
+    packages = "php8.2-fpm, php8.2-mbstring"
     packages_from_raw_bash = """
         if [[ "$database" == true ]]; then 
             echo "mariadb-server, php8.2-mysql"
