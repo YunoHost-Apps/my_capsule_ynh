@@ -11,6 +11,7 @@ source ynh_apps
 source /usr/share/yunohost/helpers
 
 ynh_install_apps --apps="gemserv"
+
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
@@ -67,7 +68,7 @@ chown -R $app:www-data "$install_dir"
 ynh_script_progression --message="Configuring PHP-FPM..."
 
 # Create a dedicated PHP-FPM config
-ynh_add_fpm_config --usage=low --footprint=low
+ynh_add_fpm_config
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
