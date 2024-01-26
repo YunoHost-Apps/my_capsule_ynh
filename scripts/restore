@@ -50,6 +50,7 @@ chown -R $app:www-data "$install_dir"
 if [ $with_mysql -eq 1 ]; then
 	ynh_script_progression --message="Restoring the MySQL database..."
 
+	ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 	ynh_mysql_connect_as --user=$db_user --password=$db_pwd --database=$db_name < ./db.sql
 fi
 
