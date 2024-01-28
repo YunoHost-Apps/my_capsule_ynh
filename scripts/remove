@@ -55,7 +55,8 @@ ynh_systemd_action --service_name=gemserv --action=reload
 ynh_script_progression --message="Removing dependencies..."
 
 # Remove metapackage and its dependencies
-ynh_remove_apps
+# ynh_remove_apps
+yunohost app remove gemserv
 
 #=================================================
 # END OF SCRIPT
