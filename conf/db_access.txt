@@ -1,0 +1,4 @@
+# MySQL Database
+name: __DB_NAME__
+user: __DB_USER__
+pass: __DB_PWD__
