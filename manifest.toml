@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "my_capsule"
@@ -77,7 +79,7 @@ ram.runtime = "50M"
     [resources.apt]
     packages = "php8.2-fpm, php8.2-mbstring"
     packages_from_raw_bash = """
-        if [[ "$database" == true ]]; then 
+        if [[ "$database" == true ]]; then
             echo "mariadb-server, php8.2-mysql"
         fi
     """
