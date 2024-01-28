@@ -4,15 +4,19 @@
 # COMMON VARIABLES
 #=================================================
 
-YNH_PHP_VERSION="7.4"
-
-# dependencies used by the app
-pkg_dependencies="php${YNH_PHP_VERSION}-fpm php${YNH_PHP_VERSION}-mbstring"
-app_dependencies="gemserv"
-
 #=================================================
 # PERSONAL HELPERS
 #=================================================
+
+_ynh_add_gemserv_config() {
+    ynh_add_config --template="server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
+    ynh_systemd_action --service_name=gemserv --action=reload
+}
+
+_ynh_remove_gemserv_config() {
+    ynh_secure_remove --file="/etc/gemserv/config.d/$domain.toml"
+    ynh_systemd_action --service_name=gemserv --action=reload
+}
 
 #=================================================
 # EXPERIMENTAL HELPERS

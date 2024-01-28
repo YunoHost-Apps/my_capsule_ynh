@@ -11,70 +11,17 @@ source ynh_apps
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading installation settings..."
-
-app=$YNH_APP_INSTANCE_NAME
-
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-language=$(ynh_app_setting_get --app=$app --key=language)
-admin=$(ynh_app_setting_get --app=$app --key=admin)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-db_user=$db_name
-password=$(ynh_app_setting_get --app=$app --key=password)
-with_mysql=$(ynh_app_setting_get --app=$app --key=with_mysql)
-with_sftp=$(ynh_app_setting_get --app=$app --key=with_sftp)
-
-#=================================================
-# CHECK VERSION
-#=================================================
-ynh_script_progression --message="Checking version..."
-
-upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..."
-
-# Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
-	ynh_clean_check_starting
-	# Restore it if the upgrade fails
-	ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
-
-#=================================================
-# STANDARD UPGRADE STEPS
-#=================================================
-# ENSURE DOWNWARD COMPATIBILITY
-#=================================================
-ynh_script_progression --message="Ensuring downward compatibility..."
-
-#=================================================
 # CREATE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Making sure dedicated system user exists..."
 
-if [ $with_sftp -eq 1 ]
-then
-	groups="sftp.app"
-else
-	groups=""
+if [ "$with_sftp" -eq 1 ]; then
+    usermod -a -G "sftp.app" "$app"
 fi
 
-ynh_system_user_create --username=$app --home_dir="$final_path" --groups="$groups"
-
-if [ -n "$password" ]
-then
-	# Add the password to this user
-	chpasswd <<< "${app}:${password}"
+if [ -n "$password" ]; then
+    # Add the password to this user
+    chpasswd <<< "${app}:${password}"
 fi
 
 # Change the user group for previous my_webapp install script
@@ -84,75 +31,43 @@ usermod -g "$app" "$app"
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression --message="Upgrading source files..."
 
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	ynh_script_progression --message="Upgrading source files..."
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$install_dir/www/htmgem" --full_replace=1
 
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$final_path/www/htmgem"
+chmod -R o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
+
+# Home directory of the user needs to be owned by $app to allow SFTP connections
+chown "$app:$app" "$install_dir"
+setfacl -m g:"$app":r-x "$install_dir"
+setfacl -m g:"www-data":r-x "$install_dir"
+setfacl -m g:"gemserv":r-x "$install_dir"
+
+#=================================================
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression --message="Adding a configuration file..." --weight=1
+
+if [ "$with_mysql" -eq 1 ]; then
+    ynh_add_config --template="db_access.txt" --destination="$install_dir/db_access.txt"
+    chown "$app:www-data" "$install_dir/db_access.txt"
+    chmod 440 "$install_dir/db_access.txt"
 fi
 
-#chmod 750 "$final_path"
-#chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
-
 #=================================================
-# UPGRADE DEPENDENCIES
+# REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..."
-
-ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# PHP-FPM CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading PHP-FPM configuration..."
+ynh_script_progression --message="Upgrading system configurations related to $app..." --weight=1
 
 # Create a dedicated PHP-FPM config
 ynh_add_fpm_config
 
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..."
-
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-#=================================================
-# SPECIFIC UPGRADE
-#=================================================
-# APPLY RIGHTS
-#=================================================
-ynh_script_progression --message="Apply rights..."
-
-chown -R $app:www-data "$final_path"
-
-# Home directory of the user needs to be owned by $app to allow
-# SFTP connections
-chown $app:$app "$final_path"
-setfacl -m g:$app:r-x "$final_path"
-setfacl -m g:www-data:r-x "$final_path"
-setfacl -m g:gemserv:r-x "$final_path"
-chmod o-rwx "$final_path"
-
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Updating a configuration file..."
-
-ynh_add_config --template="../conf/server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
-ynh_systemd_action --service_name=gemserv --action=reload
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# RELOAD NGINX
-#=================================================
-ynh_script_progression --message="Reloading NGINX web server..."
-
-ynh_systemd_action --service_name=nginx --action=reload
+_ynh_add_gemserv_config
 
 #=================================================
 # END OF SCRIPT
