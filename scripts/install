@@ -10,47 +10,27 @@ source _common.sh
 source ynh_apps
 source /usr/share/yunohost/helpers
 
+#=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Installing Gemserv..."
+
 # ynh_install_apps --apps="gemserv"
-yunohost app install --force gemserv
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Configuring system user..."
 
-if [ $with_sftp -eq 1 ]
-then
-	groups="sftp.app"
-else
-	groups=""
+if [ "$with_sftp" -eq 1 ]; then
+    usermod -a -G "sftp.app" "$app"
 fi
 
-	ynh_system_user_create --username=$app --home_dir="$install_dir" --groups="$groups"
-
-if [ $with_sftp -eq 1 ]
-then
-	# Add the password to this user
-	chpasswd <<< "${app}:${password}"
-	ynh_app_setting_set --app=$app --key=password --value="$password"
-fi
-
-#=================================================
-# CREATE A MYSQL DATABASE
-#=================================================
-
-if [ $with_mysql -eq 1 ]
-then
-	ynh_script_progression --message="Creating a MySQL database..."
-
-	db_name=$(ynh_sanitize_dbid --db_name=$app)
-    db_user=$db_name
-    db_pwd=$(ynh_string_random --length=30)
-
-    ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-    ynh_app_setting_set --app=$app --key=db_user --value=$db_user
-    ynh_app_setting_set --app=$app --key=db_pwd --value=$db_pwd
-
-	ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
+if [ -n "$password" ]; then
+    # Add the password to this user
+    chpasswd <<< "${app}:${password}"
+    # By default, passwords are not saved
+    ynh_app_setting_set --app="$app" --key=password --value="$password"
 fi
 
 #=================================================
@@ -61,18 +41,25 @@ ynh_script_progression --message="Setting up source files..."
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir/www/htmgem"
 
-chown -R $app:www-data "$install_dir"
+chmod o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
+
+# Home directory of the user needs to be owned by $app to allow SFTP connections
+chown "$app:$app" "$install_dir"
+setfacl -m g:"$app":r-x "$install_dir"
+setfacl -m g:"www-data":r-x "$install_dir"
+setfacl -m g:"gemserv":r-x "$install_dir"
 
 #=================================================
-# PHP-FPM CONFIGURATION
+# ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring PHP-FPM..."
+ynh_script_progression --message="Adding a configuration file..." --weight=1
 
-# Create a dedicated PHP-FPM config
-ynh_add_fpm_config
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
+if [ "$with_mysql" -eq 1 ]; then
+    ynh_add_config --template="db_access.txt" --destination="$install_dir/db_access.txt"
+    chown "$app:www-data" "$install_dir/db_access.txt"
+    chmod 440 "$install_dir/db_access.txt"
+fi
 
 #=================================================
 # SPECIFIC SETUP
@@ -81,47 +68,28 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Building default capsule..."
 
-if [ $with_sftp -eq 1 ]
-then
-	ynh_add_config --template="../conf/index.gmi" --destination="$install_dir/www/index.gmi"
+if [ "$with_sftp" -eq 1 ]; then
+    ynh_add_config --template="index.gmi" --destination="$install_dir/www/index.gmi"
 else
-	ynh_add_config --template="../conf/index_no_sftp.gmi" --destination="$install_dir/www/index.gmi"
+    ynh_add_config --template="index_no_sftp.gmi" --destination="$install_dir/www/index.gmi"
 fi
 
 chmod 644 "$install_dir/www/index.gmi"
-chown $app:$app "$install_dir/www/index.gmi"
-
-if [ $with_mysql -eq 1 ]; then
-	# Store the database access
-	echo -e "# MySQL Database
-	name: ${db_name}\nuser: ${db_name}\npass: ${db_pwd}" > ../conf/db_access.txt
-
-	# Copy files to the right place
-	cp -r "../conf/db_access.txt" "$install_dir/db_access.txt"
-fi
+chown "$app:$app" "$install_dir/www/index.gmi"
 
 #=================================================
-# APPLY RIGHTS
+# SYSTEM CONFIGURATION
 #=================================================
-ynh_script_progression --message="Apply rights..."
+ynh_script_progression --message="Adding system configurations related to $app..." --weight=1
 
-chown -R $app:www-data "$install_dir"
+# Create a dedicated PHP-FPM config
+ynh_add_fpm_config
 
-# Home directory of the user needs to be owned by $app to allow
-# SFTP connections
-chown $app:$app "$install_dir"
-setfacl -m g:$app:r-x "$install_dir"
-setfacl -m g:www-data:r-x "$install_dir"
-setfacl -m g:gemserv:r-x "$install_dir"
-chmod o-rwx "$install_dir"
+# Create a dedicated NGINX config
+ynh_add_nginx_config
 
-#=================================================
-# ADD A CONFIGURATION
-#=================================================
-ynh_script_progression --message="Adding a configuration file..."
-
-ynh_add_config --template="../conf/server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
-ynh_systemd_action --service_name=gemserv --action=reload
+# Create a dedicated Gemserv config
+_ynh_add_gemserv_config
 
 #=================================================
 # END OF SCRIPT

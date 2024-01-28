@@ -65,9 +65,11 @@ ram.runtime = "50M"
     default = false
 
 [resources]
-        [resources.sources.main]
-        url = "https://tildegit.org/sbgodin/HtmGem/archive/v1.4.1.tar.gz"
-        sha256 = "4d21fbdf5f89e510052185ea9d331614338353886baaecc05d007fa1481f75ce"
+    [resources.sources.main]
+    url = "https://tildegit.org/sbgodin/HtmGem/archive/v1.4.1.tar.gz"
+    sha256 = "4d21fbdf5f89e510052185ea9d331614338353886baaecc05d007fa1481f75ce"
+
+    # autoupdate.strategy = "latest_github_tag"
 
     [resources.system_user]
 
@@ -83,3 +85,7 @@ ram.runtime = "50M"
             echo "mariadb-server, php8.2-mysql"
         fi
     """
+
+    [resources.database]
+    # Might not be used, but it's easier to handle it here
+    type = "mysql"

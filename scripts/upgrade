@@ -11,29 +11,17 @@ source ynh_apps
 source /usr/share/yunohost/helpers
 
 #=================================================
-# CHECK VERSION
-#=================================================
-
-upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
 # CREATE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Making sure dedicated system user exists..."
 
-if [ $with_sftp -eq 1 ]
-then
-	groups="sftp.app"
-else
-	groups=""
+if [ "$with_sftp" -eq 1 ]; then
+    usermod -a -G "sftp.app" "$app"
 fi
 
-ynh_system_user_create --username=$app --home_dir="$install_dir" --groups="$groups"
-
-if [ -n "$password" ]
-then
-	# Add the password to this user
-	chpasswd <<< "${app}:${password}"
+if [ -n "$password" ]; then
+    # Add the password to this user
+    chpasswd <<< "${app}:${password}"
 fi
 
 # Change the user group for previous my_webapp install script
@@ -43,22 +31,35 @@ usermod -g "$app" "$app"
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression --message="Upgrading source files..."
 
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	ynh_script_progression --message="Upgrading source files..."
-
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$install_dir/www/htmgem"
-fi
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$install_dir/www/htmgem" --full_replace=1
 
 chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
+chown -R "$app:www-data" "$install_dir"
+
+# Home directory of the user needs to be owned by $app to allow SFTP connections
+chown "$app:$app" "$install_dir"
+setfacl -m g:"$app":r-x "$install_dir"
+setfacl -m g:"www-data":r-x "$install_dir"
+setfacl -m g:"gemserv":r-x "$install_dir"
 
 #=================================================
-# PHP-FPM CONFIGURATION
+# ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading PHP-FPM configuration..."
+ynh_script_progression --message="Adding a configuration file..." --weight=1
+
+if [ "$with_mysql" -eq 1 ]; then
+    ynh_add_config --template="db_access.txt" --destination="$install_dir/db_access.txt"
+    chown "$app:www-data" "$install_dir/db_access.txt"
+    chmod 440 "$install_dir/db_access.txt"
+fi
+
+#=================================================
+# REAPPLY SYSTEM CONFIGURATIONS
+#=================================================
+ynh_script_progression --message="Upgrading system configurations related to $app..." --weight=1
 
 # Create a dedicated PHP-FPM config
 ynh_add_fpm_config
@@ -66,30 +67,7 @@ ynh_add_fpm_config
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-#=================================================
-# SPECIFIC UPGRADE
-#=================================================
-# APPLY RIGHTS
-#=================================================
-ynh_script_progression --message="Apply rights..."
-
-chown -R $app:www-data "$install_dir"
-
-# Home directory of the user needs to be owned by $app to allow
-# SFTP connections
-chown $app:$app "$install_dir"
-setfacl -m g:$app:r-x "$install_dir"
-setfacl -m g:www-data:r-x "$install_dir"
-setfacl -m g:gemserv:r-x "$install_dir"
-chmod o-rwx "$install_dir"
-
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Updating a configuration file..."
-
-ynh_add_config --template="../conf/server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
-ynh_systemd_action --service_name=gemserv --action=reload
+_ynh_add_gemserv_config
 
 #=================================================
 # END OF SCRIPT
