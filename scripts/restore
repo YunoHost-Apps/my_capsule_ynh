@@ -44,7 +44,7 @@ setfacl -m g:"gemserv":r-x "$install_dir"
 #=================================================
 # RESTORE THE MYSQL DATABASE
 #=================================================
-if [ "$with_sql" -eq 1 ]; then
+if [ "$with_mysql" -eq 1 ]; then
     ynh_script_progression --message="Restoring the MySQL database..." --weight=1
 
     ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" --database="$db_name" < ./db.sql
