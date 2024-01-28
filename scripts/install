@@ -10,7 +10,8 @@ source _common.sh
 source ynh_apps
 source /usr/share/yunohost/helpers
 
-echo "Yes, I understand" | ynh_install_apps --apps="gemserv"
+# ynh_install_apps --apps="gemserv"
+yunohost app install --force gemserv
 
 #=================================================
 # CREATE DEDICATED USER
