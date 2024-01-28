@@ -4,12 +4,6 @@ test_format = 1.0
 
 [default]
 
-    preinstall = """
-    yunohost tools update apps
-    # Horrible trick to make gemserv install work
-    jq '.apps.gemserv.level = 8' /var/cache/yunohost/repo/default.json > /tmp/catalog
-    mv /tmp/catalog /var/cache/yunohost/repo/default.json
-    """
 
     # ------------
     # Tests to run
