@@ -68,8 +68,7 @@ ram.runtime = "50M"
     [resources.sources.main]
     url = "https://tildegit.org/sbgodin/HtmGem/archive/v1.4.1.tar.gz"
     sha256 = "4d21fbdf5f89e510052185ea9d331614338353886baaecc05d007fa1481f75ce"
-
-    # autoupdate.strategy = "latest_github_tag"
+    autoupdate.strategy = "latest_gitea_release"
 
     [resources.system_user]
 
