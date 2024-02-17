@@ -7,7 +7,7 @@ name = "my_capsule"
 description.en = "Custom Gemini capsule with SFTP access and HtmGem"
 description.fr = "Capsule Gemini personnalisée avec accès SFTP et HtmGem"
 
-version = "1.4.1~ynh1"
+version = "v1.4.1~ynh1"
 
 maintainers = ["yalh76"]
 
@@ -66,7 +66,7 @@ ram.runtime = "50M"
 
 [resources]
     [resources.sources.main]
-    url = "https://tildegit.org/sbgodin/HtmGem/archive/v1.4.1.tar.gz"
+    url = "https://tildegit.org//Sbgodin/htmgem/archive/v1.4.1.tar.gz"
     sha256 = "4d21fbdf5f89e510052185ea9d331614338353886baaecc05d007fa1481f75ce"
     autoupdate.strategy = "latest_gitea_tag"
 
