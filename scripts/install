@@ -7,7 +7,6 @@
 #=================================================
 
 source _common.sh
-source ynh_apps
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -15,7 +14,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Installing Gemserv..."
 
-# ynh_install_apps --apps="gemserv"
+ynh_install_apps --apps="gemserv"
 
 #=================================================
 # CREATE DEDICATED USER
