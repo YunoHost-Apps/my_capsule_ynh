@@ -7,7 +7,7 @@ name = "my_capsule"
 description.en = "Custom Gemini capsule with SFTP access and HtmGem"
 description.fr = "Capsule Gemini personnalisée avec accès SFTP et HtmGem"
 
-version = "1.4.1~ynh1"
+version = "1.4.1~ynh2"
 
 maintainers = ["yalh76"]
 
