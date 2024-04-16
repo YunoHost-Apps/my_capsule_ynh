@@ -19,7 +19,7 @@ Il NE doit PAS être modifié à la main.
 Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages Gemini accessibles sur le web.
 
 
-**Version incluse :** 1.4.1~ynh1
+**Version incluse :** 1.4.1~ynh2
 
 **Démo :** <https://gmi.sbgodin.fr/htmgem/>
 

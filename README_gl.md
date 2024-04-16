@@ -19,7 +19,7 @@ NON debe editarse manualmente.
 Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reachable on the web.
 
 
-**Versión proporcionada:** 1.4.1~ynh1
+**Versión proporcionada:** 1.4.1~ynh2
 
 **Demo:** <https://gmi.sbgodin.fr/htmgem/>
 
