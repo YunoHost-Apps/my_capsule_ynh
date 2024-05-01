@@ -58,12 +58,6 @@ ram.runtime = "50M"
     type = "boolean"
     default = true
 
-    [install.with_mysql]
-    ask.en = "Do you need a MySQL database?"
-    ask.fr = "Avez-vous besoin d'une base de données MySQL ?"
-    type = "boolean"
-    default = false
-
 [resources]
     [resources.sources.main]
     url = "https://tildegit.org/sbgodin/HtmGem/archive/v1.4.1.tar.gz"
@@ -81,13 +75,9 @@ ram.runtime = "50M"
     packages = [
         "php8.2-fpm",
         "php8.2-mbstring",
+        "mariadb-server",
+        "php8.2-mysql"
     ]
-    packages_from_raw_bash = """
-        if [[ "$database" == true ]]; then
-            echo "mariadb-server, php8.2-mysql"
-        fi
-    """
 
     [resources.database]
-    # Might not be used, but it's easier to handle it here
     type = "mysql"

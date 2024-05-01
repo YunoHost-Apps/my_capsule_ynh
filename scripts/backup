@@ -44,11 +44,9 @@ ynh_backup --src_path="/etc/gemserv/config.d/$domain.toml"
 #=================================================
 # BACKUP THE MYSQL DATABASE
 #=================================================
+ynh_print_info --message="Backing up the MySQL database..."
 
-if [ "$with_mysql" -eq 1 ]; then
-    ynh_print_info --message="Backing up the MySQL database..."
-    ynh_mysql_dump_db --database="$db_name" > db.sql
-fi
+ynh_mysql_dump_db --database="$db_name" > db.sql
 
 #=================================================
 # END OF SCRIPT
