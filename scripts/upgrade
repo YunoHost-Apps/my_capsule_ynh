@@ -46,17 +46,6 @@ setfacl -m g:"www-data":r-x "$install_dir"
 setfacl -m g:"gemserv":r-x "$install_dir"
 
 #=================================================
-# ADD A CONFIGURATION
-#=================================================
-ynh_script_progression --message="Adding a configuration file..." --weight=1
-
-if [ "$with_mysql" -eq 1 ]; then
-    ynh_add_config --template="db_access.txt" --destination="$install_dir/db_access.txt"
-    chown "$app:www-data" "$install_dir/db_access.txt"
-    chmod 440 "$install_dir/db_access.txt"
-fi
-
-#=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression --message="Upgrading system configurations related to $app..." --weight=1
