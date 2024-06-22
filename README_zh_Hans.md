@@ -3,7 +3,7 @@
 请勿手动编辑。
 -->
 
-# YunoHost 的 my_capsule
+# YunoHost 上的 my_capsule
 
 [![集成程度](https://dash.yunohost.org/integration/my_capsule.svg)](https://dash.yunohost.org/appci/app/my_capsule) ![工作状态](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
 
