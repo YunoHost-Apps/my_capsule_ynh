@@ -25,8 +25,8 @@ Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reac
 
 ## Pantaila-argazkiak
 
-![my_capsule(r)en pantaila-argazkia](./doc/screenshots/screenshot1.png)
 ![my_capsule(r)en pantaila-argazkia](./doc/screenshots/screenshot2.png)
+![my_capsule(r)en pantaila-argazkia](./doc/screenshots/screenshot1.png)
 
 ## Dokumentazioa eta baliabideak
 

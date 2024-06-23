@@ -25,8 +25,8 @@ Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reac
 
 ## Screenshots
 
-![Screenshot of my_capsule](./doc/screenshots/screenshot1.png)
 ![Screenshot of my_capsule](./doc/screenshots/screenshot2.png)
+![Screenshot of my_capsule](./doc/screenshots/screenshot1.png)
 
 ## Documentation and resources
 

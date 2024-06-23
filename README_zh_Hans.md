@@ -25,8 +25,8 @@ Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reac
 
 ## 截图
 
-![my_capsule 的截图](./doc/screenshots/screenshot1.png)
 ![my_capsule 的截图](./doc/screenshots/screenshot2.png)
+![my_capsule 的截图](./doc/screenshots/screenshot1.png)
 
 ## 文档与资源
 
