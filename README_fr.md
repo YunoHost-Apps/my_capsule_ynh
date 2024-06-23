@@ -25,8 +25,8 @@ Capsule Gemini personnalisée avec accès SFTP et HtmGem pour rendre vos pages G
 
 ## Captures d’écran
 
-![Capture d’écran de my_capsule](./doc/screenshots/screenshot1.png)
 ![Capture d’écran de my_capsule](./doc/screenshots/screenshot2.png)
+![Capture d’écran de my_capsule](./doc/screenshots/screenshot1.png)
 
 ## Documentations et ressources
 
