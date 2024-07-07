@@ -5,7 +5,7 @@
 
 # YunoHost 上的 my_capsule
 
-[![集成程度](https://dash.yunohost.org/integration/my_capsule.svg)](https://dash.yunohost.org/appci/app/my_capsule) ![工作状态](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/my_capsule.svg)](https://ci-apps.yunohost.org/ci/apps/my_capsule/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
 
 [![使用 YunoHost 安装 my_capsule](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=my_capsule)
 
