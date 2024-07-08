@@ -7,15 +7,15 @@
 #=================================================
 
 source _common.sh
-source ynh_apps
 source /usr/share/yunohost/helpers
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Installing Gemserv..."
 
-# ynh_install_apps --apps="gemserv"
+if ! yunohost app list --output-as json --quiet | jq -e '.apps[] | select(.id == "gemserv")' >/dev/null; then
+    ynh_die --message="Please install gemserv before installing my_capsule."
+fi
 
 #=================================================
 # CREATE DEDICATED USER
