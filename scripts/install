@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source ynh_apps
 source /usr/share/yunohost/helpers
@@ -13,14 +7,14 @@ source /usr/share/yunohost/helpers
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Installing Gemserv..."
+ynh_script_progression "Installing Gemserv..."
 
 # ynh_install_apps --apps="gemserv"
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..."
+ynh_script_progression "Configuring system user..."
 
 if [ "$with_sftp" -eq 1 ]; then
     usermod -a -G "sftp.app" "$app"
@@ -30,22 +24,21 @@ if [ -n "$password" ]; then
     # Add the password to this user
     chpasswd <<< "${app}:${password}"
     # By default, passwords are not saved
-    ynh_app_setting_set --app="$app" --key=password --value="$password"
+    ynh_app_setting_set --key=password --value="$password"
 fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..."
+ynh_script_progression "Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir/www/htmgem"
 
-chmod o-rwx "$install_dir"
-chown -R "$app:www-data" "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:www-data" "$install_dir"
 # Home directory of the user needs to be owned by $app to allow SFTP connections
-chown "$app:$app" "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown "$app:$app" "$install_dir"
 setfacl -m g:"$app":r-x "$install_dir"
 setfacl -m g:"www-data":r-x "$install_dir"
 setfacl -m g:"gemserv":r-x "$install_dir"
@@ -55,12 +48,12 @@ setfacl -m g:"gemserv":r-x "$install_dir"
 #=================================================
 # BUILD DEFAULT CAPSULE
 #=================================================
-ynh_script_progression --message="Building default capsule..."
+ynh_script_progression "Building default capsule..."
 
 if [ "$with_sftp" -eq 1 ]; then
-    ynh_add_config --template="index.gmi" --destination="$install_dir/www/index.gmi"
+    ynh_config_add --template="index.gmi" --destination="$install_dir/www/index.gmi"
 else
-    ynh_add_config --template="index_no_sftp.gmi" --destination="$install_dir/www/index.gmi"
+    ynh_config_add --template="index_no_sftp.gmi" --destination="$install_dir/www/index.gmi"
 fi
 
 chmod 644 "$install_dir/www/index.gmi"
@@ -69,13 +62,13 @@ chown "$app:$app" "$install_dir/www/index.gmi"
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding system configurations related to $app..." --weight=1
+ynh_script_progression "Adding system configurations related to $app..."
 
 # Create a dedicated PHP-FPM config
-ynh_add_fpm_config
+ynh_config_add_phpfpm
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 # Create a dedicated Gemserv config
 _ynh_add_gemserv_config
@@ -84,4 +77,4 @@ _ynh_add_gemserv_config
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed"
+ynh_script_progression "Installation of $app completed"
