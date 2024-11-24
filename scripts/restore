@@ -26,20 +26,28 @@ if [ -n "$password" ]; then
 fi
 
 #=================================================
+# INSTALL GEMSERV
+#=================================================
+ynh_script_progression --message="Installing Gemserv..."
+
+ynh_install_apps --apps="gemserv"
+
+#=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
 ynh_script_progression --message="Restoring the app main directory..."
 
 ynh_restore_file --origin_path="$install_dir"
 
-chmod -R o-rwx "$install_dir"
-chown -R "$app:www-data" "$install_dir"
+chown -R $app:www-data "$install_dir"
 
-# Home directory of the user needs to be owned by $app to allow SFTP connections
-chown "$app:$app" "$install_dir"
-setfacl -m g:"$app":r-x "$install_dir"
-setfacl -m g:"www-data":r-x "$install_dir"
-setfacl -m g:"gemserv":r-x "$install_dir"
+# Home directory of the user needs to be owned by $app to allow
+# SFTP connections
+chown $app:$app "$install_dir"
+setfacl -m g:$app:r-x "$install_dir"
+setfacl -m g:www-data:r-x "$install_dir"
+setfacl -m g:gemserv:r-x "$install_dir"
+chmod o-rwx "$install_dir"
 
 #=================================================
 # RESTORE THE MYSQL DATABASE
