@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # my_capsule voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/my_capsule.svg)](https://ci-apps.yunohost.org/ci/apps/my_capsule/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/my_capsule)](https://ci-apps.yunohost.org/ci/apps/my_capsule/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/my_capsule)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/my_capsule)
 
 [![my_capsule met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=my_capsule)
 
