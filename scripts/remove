@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source ynh_apps
 source /usr/share/yunohost/helpers
@@ -9,10 +13,8 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Removing system configurations related to $app..."
 
-# Remove the dedicated NGINX config
 ynh_config_remove_nginx
 
-# Remove the dedicated PHP-FPM config
 ynh_config_remove_phpfpm
 
 _ynh_remove_gemserv_config
