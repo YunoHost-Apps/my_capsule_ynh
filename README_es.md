@@ -5,7 +5,9 @@ No se debe editar a mano.
 
 # my_capsule para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/my_capsule.svg)](https://ci-apps.yunohost.org/ci/apps/my_capsule/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/my_capsule)](https://ci-apps.yunohost.org/ci/apps/my_capsule/)
+![Estado funcional](https://apps.yunohost.org/badge/state/my_capsule)
+![Estado En Mantención](https://apps.yunohost.org/badge/maintained/my_capsule)
 
 [![Instalar my_capsule con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=my_capsule)
 
@@ -37,7 +39,7 @@ Custom Gemini capsule with SFTP access and HtmGem to make your Gemini pages reac
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/my_capsule_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/my_capsule_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 

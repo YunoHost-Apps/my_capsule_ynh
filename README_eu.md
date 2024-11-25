@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # my_capsule YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/my_capsule.svg)](https://ci-apps.yunohost.org/ci/apps/my_capsule/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/my_capsule)](https://ci-apps.yunohost.org/ci/apps/my_capsule/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/my_capsule)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/my_capsule)
 
 [![Instalatu my_capsule YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=my_capsule)
 
