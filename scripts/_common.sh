@@ -1,27 +1,15 @@
 #!/bin/bash
 
 #=================================================
-# COMMON VARIABLES
-#=================================================
-
-#=================================================
-# PERSONAL HELPERS
+# COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
 
 _ynh_add_gemserv_config() {
-    ynh_add_config --template="server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
-    ynh_systemd_action --service_name=gemserv --action=reload
+    ynh_config_add --template="server.toml" --destination="/etc/gemserv/config.d/$domain.toml"
+    ynh_systemctl --service=gemserv --action=reload
 }
 
 _ynh_remove_gemserv_config() {
-    ynh_secure_remove --file="/etc/gemserv/config.d/$domain.toml"
-    ynh_systemd_action --service_name=gemserv --action=reload
+    ynh_safe_rm "/etc/gemserv/config.d/$domain.toml"
+    ynh_systemctl --service=gemserv --action=reload
 }
-
-#=================================================
-# EXPERIMENTAL HELPERS
-#=================================================
-
-#=================================================
-# FUTURE OFFICIAL HELPERS
-#=================================================

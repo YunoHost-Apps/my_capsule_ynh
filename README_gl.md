@@ -5,7 +5,9 @@ NON debe editarse manualmente.
 
 # my_capsule para YunoHost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/my_capsule.svg)](https://dash.yunohost.org/appci/app/my_capsule) ![Estado de funcionamento](https://ci-apps.yunohost.org/ci/badges/my_capsule.status.svg) ![Estado de mantemento](https://ci-apps.yunohost.org/ci/badges/my_capsule.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/my_capsule)](https://ci-apps.yunohost.org/ci/apps/my_capsule/)
+![Estado de funcionamento](https://apps.yunohost.org/badge/state/my_capsule)
+![Estado de mantemento](https://apps.yunohost.org/badge/maintained/my_capsule)
 
 [![Instalar my_capsule con YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=my_capsule)
 
