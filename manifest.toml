@@ -18,13 +18,12 @@ code = "https://tildegit.org/Sbgodin/htmgem"
 website = "https://tildegit.org/Sbgodin/htmgem"
 
 [integration]
-yunohost = ">= 11.2.30"
+yunohost = ">= 12.1.17"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
 
 ldap = false
-
 sso = false
 
 disk = "50M"
@@ -62,7 +61,7 @@ ram.runtime = "50M"
 [resources]
     [resources.sources.main]
     url = "https://tildegit.org/sbgodin/HtmGem/archive/v1.4.1.tar.gz"
-    sha256 = "4d21fbdf5f89e510052185ea9d331614338353886baaecc05d007fa1481f75ce"
+    sha256 = "b0e3fcaf8d5ceb22f191dcacf31046d88bd70ffec5cc455e5b401aef76a9e42a"
     autoupdate.strategy = "latest_gitea_tag"
 
     [resources.system_user]
